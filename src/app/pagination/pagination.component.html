@@ -1,0 +1,13 @@
+<div class="pagination-container" *ngIf="end">
+    <div class="pagination-content">
+        <p class="pagination-info">{{info}}</p>
+        <ul class="pagination-list">
+            <li class="pagination-item prev">
+                <a (click)="onPrev()"><</a>
+            <li class="pagination-item next">
+                <a (click)="onNext()">></a>
+            </li>
+        </ul>
+    </div>
+
+</div>
