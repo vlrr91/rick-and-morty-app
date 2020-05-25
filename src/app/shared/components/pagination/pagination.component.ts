@@ -1,25 +1,23 @@
-import {Component, Output, EventEmitter, OnInit} from '@angular/core';
-
-import { PaginationService } from "./pagination.service";
-import { Pagination } from "../../interfaces/pagination";
+import { Component, Output, EventEmitter, OnChanges, Input } from '@angular/core';
 
 @Component({
     selector: 'rm-pagination',
     templateUrl: './pagination.component.html',
     styleUrls: ['./pagination.component.scss']
 })
-export class PaginationComponent implements OnInit {
+export class PaginationComponent implements OnChanges {
+    @Input() totalItems: number;
+    @Input() currentPage: number;
+    @Input() pages: number;
     @Output() prevPage: EventEmitter<string> = new EventEmitter<string>();
     @Output() nextPage: EventEmitter<string> = new EventEmitter<string>();
 
     info: string = "";
 
-    constructor(private paginationService: PaginationService) {}
+    constructor() {}
 
-    ngOnInit(): void {
-      this.paginationService.paginationChange$.subscribe(
-        infoPagination => this.displayInfoPagination(infoPagination)
-      );
+    ngOnChanges(): void {
+      this.displayInfoPagination();
     }
 
     onPrev(): void {
@@ -30,12 +28,16 @@ export class PaginationComponent implements OnInit {
         this.nextPage.emit('NEXT');
     }
 
-    displayInfoPagination(infoPagination: Pagination) {
-      const { count, pages, page, next } = infoPagination;
-      const charactersPerPage = Math.ceil(count / pages);
-      const lastCharacter = charactersPerPage * page;
+    displayInfoPagination() {
+      const charactersPerPage = Math.ceil(this.totalItems / this.pages);
+      const lastCharacter = this.validateLastCharacter(charactersPerPage);
       const initialCharacter = lastCharacter - (charactersPerPage - 1);
 
-      this.info = `${initialCharacter} - ${next ? lastCharacter : count} de ${infoPagination.count}`;
+      this.info = `${initialCharacter} - ${lastCharacter} de ${this.totalItems}`;
+    }
+
+    validateLastCharacter(charactersPerPage: number): number {
+      const lastCharacter = charactersPerPage * this.currentPage;
+      return lastCharacter < this.totalItems ? lastCharacter : this.totalItems;
     }
 }

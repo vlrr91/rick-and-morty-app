@@ -2,13 +2,12 @@
     .btn-back {
         color: rgb(99, 192, 119);
         border: 2px solid rgb(99, 192, 119);
-        margin: 0 auto;
+        margin: 0 auto 1.5rem;
         display: table;
         padding: 1rem 1rem .8rem;
         border-radius: .5rem;
         text-transform: uppercase;
         font-weight: 900;
-        margin-bottom: 1.5rem;
         cursor: pointer;
         letter-spacing: 1px;
     }
@@ -24,23 +23,23 @@
         color: rgb(99, 192, 119);
         border-radius: 1rem;
         overflow: hidden;
-    
+
         .item-info {
             padding: 1rem 1.5rem;
         }
-        
+
         h4,
         p {
             margin: 0;
             letter-spacing: 1px;
         }
-        
+
         h4 {
             font-size: 1.3rem;
             font-weight: 700;
             margin-bottom: 1rem;
         }
-        
+
         p {
             margin-bottom: .2rem;
             font-weight: 400;

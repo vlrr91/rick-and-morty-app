@@ -1,24 +1,32 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from "rxjs";
 
 import { ICharacter } from "../../shared/interfaces/character";
 import { DataService } from "../data.service";
-import { PaginationService } from "../../shared/components/pagination/pagination.service";
 
 @Component({
   selector: 'rm-characters-list',
   templateUrl: './characters-list.component.html',
   styleUrls: ['./characters-list.component.scss']
 })
-export class CharactersListComponent implements OnInit {
+export class CharactersListComponent implements OnInit, OnDestroy {
+  totalNumberCharacters: number;
+  currentPage: number;
+  pages: number;
+  next: string;
+  prev: string;
+
   characters: ICharacter[];
+  paramsRouteSubscription: Subscription;
+  dataApiSubscription: Subscription;
 
   constructor(private characterService: DataService,
               private route: ActivatedRoute,
-              private paginationService: PaginationService) { }
+              private router: Router) { }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(
+    this.paramsRouteSubscription = this.route.paramMap.subscribe(
       params => {
         const page = params.get('number');
         if (isNaN(+page)) {
@@ -31,18 +39,38 @@ export class CharactersListComponent implements OnInit {
   }
 
   updateCharactersAndInfoPagination(page): void {
-    this.characterService.getDataApi(page).subscribe(
+    this.dataApiSubscription = this.characterService.getDataApi(page).subscribe(
       response => {
         const { count, pages, next, prev, charactersPerPage } = response;
         this.characters = charactersPerPage;
-        this.paginationService.setInfoPagination({
-          count,
-          pages,
-          page: +page,
-          next,
-          prev
-        });
-      }
-    )
+        this.currentPage = page;
+        this.totalNumberCharacters = count;
+        this.pages = pages;
+        this.next = next;
+        this.prev = prev;
+      },
+      err => console.log(`Error: ${err}`)
+    );
+  }
+
+  changePage(event): void {
+    if (event === 'NEXT' && this.next !== null) {
+      const nextPage = `${this.currentPage + 1}`;
+      this.router.navigate(['characters/pages', nextPage]);
+    } else if (event === 'PREV' && this.prev !== null) {
+      const prevPage = `${this.currentPage - 1}`;
+      this.router.navigate(['characters/pages', prevPage]);
+    } else {
+      return;
+    }
+  }
+
+  selectCharacter(id: number): void {
+    this.router.navigate(['/characters', id]);
+  }
+
+  ngOnDestroy(): void {
+    this.paramsRouteSubscription.unsubscribe();
+    this.dataApiSubscription.unsubscribe();
   }
 }

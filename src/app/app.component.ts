@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'rickandmorty-app';
+  title = 'LIST OF RICK AND MORTY CHARACTERS';
 }
