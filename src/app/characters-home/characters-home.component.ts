@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { CharactersHomeService } from './characters-home.service';
-import { ICharacter } from '../characters-list/character';
+import { DataService } from '../characters/data.service';
+import { ICharacter } from '../shared/interfaces/character';
 
 @Component({
     selector: 'rm-characters-home',
@@ -9,22 +9,22 @@ import { ICharacter } from '../characters-list/character';
     styleUrls: ['./characters-home.component.scss']
 })
 export class CharactersHomeComponent implements OnInit{
-    private characters: ICharacter[];
-    private numberCharacters: number;
-    private pages: number;
-    private currentPage: number = 1;
-    
-    constructor(private appService: CharactersHomeService) {}
+    characters: ICharacter[];
+    numberCharacters: number;
+    pages: number;
+    currentPage: number = 1;
+
+    constructor(private appService: DataService) {}
 
     ngOnInit(): void {
-        this.appService.getData(this.currentPage).subscribe({
-            next: data => {
-                this.characters = data.results;
-                this.pages = data.info.pages;
-                this.numberCharacters = data.info.count;
-            },
-            error: err => console.log(`Error: ${err.message}`)
-        });
+        // this.appService.getCharactersPerPage(this.currentPage).subscribe({
+        //     next: data => {
+        //         this.characters = data.results;
+        //         this.pages = data.info.pages;
+        //         this.numberCharacters = data.info.count;
+        //     },
+        //     error: err => console.log(`Error: ${err.message}`)
+        // });
     }
 
     onSelectPage(page: string): void {
@@ -35,7 +35,7 @@ export class CharactersHomeComponent implements OnInit{
         }
 
         this.characters = [];
-        this.appService.getData(this.currentPage).subscribe({
+        this.appService.getCharactersPerPage(this.currentPage).subscribe({
             next: data => {
                 this.characters = data.results;
                 this.pages = data.info.pages;

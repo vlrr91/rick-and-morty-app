@@ -3,6 +3,7 @@ export interface ICharacter {
     name: string;
     species: string;
     gender: string;
-    origin: string;
+    origin: any;
     image: string;
 }
+
