@@ -16,41 +16,30 @@ export class CharactersListComponent implements OnInit, OnDestroy {
   pages: number;
   next: string;
   prev: string;
-
   characters: ICharacter[];
-  paramsRouteSubscription: Subscription;
-  dataApiSubscription: Subscription;
+  resolvedDataSubscription: Subscription;
 
   constructor(private characterService: DataService,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router) {
+  }
 
   ngOnInit(): void {
-    this.paramsRouteSubscription = this.route.paramMap.subscribe(
-      params => {
-        const page = params.get('number');
-        if (isNaN(+page)) {
-          this.updateCharactersAndInfoPagination(1);
-        } else {
-          this.updateCharactersAndInfoPagination(+page);
-        }
-      }
+    this.resolvedDataSubscription = this.route.data.subscribe(
+      data => this.updateCharactersAndInfoPagination(data.resolvedData)
     );
   }
 
-  updateCharactersAndInfoPagination(page): void {
-    this.dataApiSubscription = this.characterService.getDataApi(page).subscribe(
-      response => {
-        const { count, pages, next, prev, charactersPerPage } = response;
-        this.characters = charactersPerPage;
-        this.currentPage = page;
-        this.totalNumberCharacters = count;
-        this.pages = pages;
-        this.next = next;
-        this.prev = prev;
-      },
-      err => console.log(`Error: ${err}`)
-    );
+  updateCharactersAndInfoPagination(data): void {
+    const {count, pages, next, prev, charactersPerPage} = data;
+    const currentPage = +this.route.snapshot.paramMap.get('number');
+
+    this.characters = charactersPerPage;
+    this.currentPage = currentPage;
+    this.totalNumberCharacters = count;
+    this.pages = pages;
+    this.next = next;
+    this.prev = prev;
   }
 
   changePage(event): void {
@@ -70,7 +59,6 @@ export class CharactersListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.paramsRouteSubscription.unsubscribe();
-    this.dataApiSubscription.unsubscribe();
+    this.resolvedDataSubscription.unsubscribe();
   }
 }

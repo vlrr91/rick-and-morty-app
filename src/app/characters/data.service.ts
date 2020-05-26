@@ -46,10 +46,13 @@ export class DataService {
   }
 
   private static  handleError(err: HttpErrorResponse) {
-      console.log(err);
+      console.dir(err);
       if (err.error instanceof ErrorEvent) {
         return throwError(`An error occurred: ${err.error.message}`);
       } else {
+        if (err.status === 404) {
+          return throwError(404);
+        }
         return throwError(`Server returned error ${err}`);
       }
   }

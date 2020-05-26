@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { Route, RouterModule} from '@angular/router';
 import { CharactersComponent } from "./characters.component";
 import { CharactersListComponent } from "./characters-list/characters-list.component";
-import {CharacterDetailComponent} from "./character-detail/character-detail.component";
+import { CharacterDetailComponent } from "./character-detail/character-detail.component";
+import { CharactersListResolver } from "./characters-list/characters-list.resolver";
+import {CharacterDetailResolver} from "./character-detail/character-detail.resolver";
 
 const routes: Route[] = [
   {
@@ -16,11 +18,13 @@ const routes: Route[] = [
       },
       {
         path: 'pages/:number',
-        component: CharactersListComponent
+        component: CharactersListComponent,
+        resolve: { resolvedData: CharactersListResolver }
       },
       {
         path: ':id',
-        component: CharacterDetailComponent
+        component: CharacterDetailComponent,
+        resolve: { resolvedData: CharacterDetailResolver }
       }
     ]
   }

@@ -1,7 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from "rxjs";
 
 import { DataService } from "../data.service";
 import { ICharacter } from '../../shared/interfaces/character';
@@ -11,9 +10,8 @@ import { ICharacter } from '../../shared/interfaces/character';
   templateUrl: './character-detail.component.html',
   styleUrls: ['./character-detail.component.scss']
 })
-export class CharacterDetailComponent implements OnInit, OnDestroy {
+export class CharacterDetailComponent implements OnInit {
   character: ICharacter;
-  characterSubscription: Subscription;
 
   constructor(
     private dataService: DataService,
@@ -22,19 +20,10 @@ export class CharacterDetailComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
-
-    this.characterSubscription = this.dataService.getCharacterById(id).subscribe(
-      character => this.character = character,
-      err => console.log(`Error: ${err}`)
-    );
+    this.character = this.route.snapshot.data['resolvedData'];
   }
 
   onBack(): void {
     this.location.back();
-  }
-
-  ngOnDestroy(): void {
-    this.characterSubscription.unsubscribe();
   }
 }
