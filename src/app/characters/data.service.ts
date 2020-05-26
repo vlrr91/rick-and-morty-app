@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import {ResponseApi} from "../shared/interfaces/response-api";
-import {ICharacter} from "../shared/interfaces/character";
+
+import { ResponseApi } from "../shared/interfaces/response-api";
+import { ICharacter } from "../shared/interfaces/character";
 
 @Injectable({
     providedIn: 'root'
@@ -45,15 +46,15 @@ export class DataService {
     );
   }
 
-  private static  handleError(err: HttpErrorResponse) {
+  private static handleError(err: HttpErrorResponse) {
       console.dir(err);
       if (err.error instanceof ErrorEvent) {
         return throwError(`An error occurred: ${err.error.message}`);
       } else {
         if (err.status === 404) {
-          return throwError(404);
+          return of(undefined);
         }
-        return throwError(`Server returned error ${err}`);
+        return throwError(`Server returned error ${err.message}`);
       }
   }
 }

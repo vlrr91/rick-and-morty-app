@@ -1,12 +1,24 @@
-<div class="character-container" *ngIf="character">
-    <a class="btn-back" (click)="onBack()">regresar</a>
+<ng-container *ngIf="!notFound; else notFoundCharacter">
+  <div class="character-container" *ngIf="character">
+    <a class="btn-back" (click)="onBack()">back</a>
     <div class="item-card">
-        <img [src]="character.image" [alt]="character.name">
-        <div class="item-info">
-            <h4>{{character.name}}</h4>
-            <p>Species: {{character.species}}</p>
-            <p>Gender: {{character.gender}}</p>
-            <p>Origin: {{character.origin.name}}</p>
-        </div>
+      <img
+        [src]="character.image"
+        [alt]="character.name">
+      <div class="item-info">
+        <h4>{{character.name}}</h4>
+        <p>Species: {{character.species}}</p>
+        <p>Gender: {{character.gender}}</p>
+        <p>Origin: {{character.origin.name}}</p>
+        <p *ngIf="character.location.name">Location: {{character.location.name}}</p>
+        <p *ngIf="character.status">Status: {{character.status}}</p>
+        <p *ngIf="character.type">Type: {{character.type}}</p>
+      </div>
     </div>
-</div>
+  </div>
+</ng-container>
+
+<ng-template #notFoundCharacter>
+  <rm-not-found></rm-not-found>
+</ng-template>
+

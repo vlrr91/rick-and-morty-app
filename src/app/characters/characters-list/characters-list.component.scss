@@ -15,7 +15,10 @@
       grid-template-columns: repeat(2, 300px);
     }
     @media screen and (max-width: 768px) {
-      grid-template-columns: repeat(1, 300px);
+      grid-template-columns: 300px;
+    }
+    @media screen and (max-width: 380px) {
+      grid-template-columns: 280px;
     }
   }
 
@@ -25,6 +28,10 @@
     border-radius: 1rem;
     overflow: hidden;
     cursor: pointer;
+
+    img {
+      display: block;
+    }
   }
 
   .item-card:hover {
@@ -39,8 +46,9 @@
   h4 {
     margin: 0;
     font-size: 1.3rem;
-    font-weight: 700;
+    font-weight: 500;
     color: #FFFFFF;
     letter-spacing: 1px;
+    text-shadow: 1px 1px 1px #252835;
   }
 }

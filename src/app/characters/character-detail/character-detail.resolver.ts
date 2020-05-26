@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Router } from "@angular/router";
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from "@angular/router";
 import { ICharacter } from "../../shared/interfaces/character";
-import { Observable } from "rxjs";
+import {Observable, of} from "rxjs";
 import {DataService} from "../data.service";
 
 @Injectable({
@@ -9,14 +9,13 @@ import {DataService} from "../data.service";
 })
 export class CharacterDetailResolver implements Resolve<ICharacter>{
 
-  constructor(private dataService: DataService,
-              private router: Router) {
+  constructor(private dataService: DataService) {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ICharacter> {
     const id = route.paramMap.get('id');
     if (isNaN(+id)) {
-      this.router.navigate(['/characters']);
+      return of(undefined);
     } else {
       return this.dataService.getCharacterById(+id);
     }

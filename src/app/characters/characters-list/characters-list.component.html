@@ -1,26 +1,33 @@
-<rm-pagination [totalItems]="totalNumberCharacters"
-               [currentPage]="currentPage"
-               [pages]="pages"
-               (prevPage)="changePage($event)"
-               (nextPage)="changePage($event)">
-</rm-pagination>
-
-<div class="characters-container">
-  <div class="characters-grid">
-    <div class="characters-item" *ngFor="let character of characters">
-      <div class="item-card" (click)="selectCharacter(character.id)">
-        <img [src]="character.image" [alt]="character.name">
-        <div class="item-info">
-          <h4>{{character.name}}</h4>
+<ng-container *ngIf="!notFound; else notFoundCharacter">
+  <rm-pagination [totalItems]="totalNumberCharacters"
+                 [currentPage]="currentPage"
+                 [pages]="pages"
+                 (prevPage)="changePage($event)"
+                 (nextPage)="changePage($event)"></rm-pagination>
+  <div class="characters-container">
+    <div class="characters-grid">
+      <div class="characters-item" *ngFor="let character of characters">
+        <div class="item-card" (click)="selectCharacter(character.id)">
+          <img [src]="character.image" [alt]="character.name">
+          <div class="item-info">
+            <h4>{{character.name}}</h4>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+  <rm-pagination [totalItems]="totalNumberCharacters"
+                 [currentPage]="currentPage"
+                 [pages]="pages"
+                 (prevPage)="changePage($event)"
+                 (nextPage)="changePage($event)"></rm-pagination>
+</ng-container>
 
-<rm-pagination [totalItems]="totalNumberCharacters"
-               [currentPage]="currentPage"
-               [pages]="pages"
-               (prevPage)="changePage($event)"
-               (nextPage)="changePage($event)">
-</rm-pagination>
+<ng-template #notFoundCharacter>
+  <rm-not-found></rm-not-found>
+</ng-template>
+
+
+
+
+

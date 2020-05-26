@@ -1,0 +1,30 @@
+.not-found {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.not-found__desc,
+.not-found__status {
+  color: #FFFFFF;
+  margin: 0;
+}
+.not-found__status {
+  font-weight: 700;
+  font-size: 8rem;
+  letter-spacing: 2px;
+}
+.not-found__link {
+  color: #FFFFFF;
+  border: 1px solid #FFFFFF;
+  margin: 1rem 0;
+  padding: .5rem 1rem;
+  border-radius: .5rem;
+  text-transform: uppercase;
+  font-weight: 500;
+  cursor: pointer;
+  letter-spacing: 1px;
+  text-decoration: none;
+  &:hover {
+    background-color: rgb(94, 228, 57);
+  }
+}

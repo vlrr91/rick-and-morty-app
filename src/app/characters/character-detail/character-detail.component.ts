@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute } from '@angular/router';
 
 import { DataService } from "../data.service";
 import { ICharacter } from '../../shared/interfaces/character';
@@ -12,15 +12,21 @@ import { ICharacter } from '../../shared/interfaces/character';
 })
 export class CharacterDetailComponent implements OnInit {
   character: ICharacter;
+  notFound: boolean;
 
   constructor(
     private dataService: DataService,
     private route: ActivatedRoute,
-    private location: Location
-  ) { }
+    private location: Location) { }
 
   ngOnInit(): void {
-    this.character = this.route.snapshot.data['resolvedData'];
+    const resolvedData = this.route.snapshot.data['resolvedData'];
+    if (resolvedData) {
+      this.notFound = false;
+      this.character = resolvedData;
+    } else {
+      this.notFound = true;
+    }
   }
 
   onBack(): void {

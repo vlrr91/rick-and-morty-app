@@ -1,12 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {PaginationComponent} from "./pagination/pagination.component";
+import { RouterModule } from "@angular/router";
+
+import { PaginationComponent } from "./pagination/pagination.component";
+import {NotFoundComponent} from "./not-found/not-found.component";
 
 @NgModule({
-  declarations: [PaginationComponent],
+  declarations: [PaginationComponent, NotFoundComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule
   ],
-  exports: [CommonModule, PaginationComponent]
+  exports: [CommonModule, PaginationComponent, NotFoundComponent]
 })
 export class SharedModule { }

@@ -19,6 +19,8 @@ export class CharactersListComponent implements OnInit, OnDestroy {
   characters: ICharacter[];
   resolvedDataSubscription: Subscription;
 
+  notFound: boolean;
+
   constructor(private characterService: DataService,
               private route: ActivatedRoute,
               private router: Router) {
@@ -26,12 +28,19 @@ export class CharactersListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.resolvedDataSubscription = this.route.data.subscribe(
-      data => this.updateCharactersAndInfoPagination(data.resolvedData)
+      data => {
+        if (data.resolvedData) {
+          this.notFound = false;
+          this.updateCharactersAndInfoPagination(data.resolvedData);
+        } else {
+          this.notFound = true;
+        }
+      }
     );
   }
 
   updateCharactersAndInfoPagination(data): void {
-    const {count, pages, next, prev, charactersPerPage} = data;
+    const { count, pages, next, prev, charactersPerPage } = data;
     const currentPage = +this.route.snapshot.paramMap.get('number');
 
     this.characters = charactersPerPage;

@@ -5,5 +5,8 @@ export interface ICharacter {
     gender: string;
     origin: any;
     image: string;
+    location: any;
+    status: string;
+    type: string;
 }
 
