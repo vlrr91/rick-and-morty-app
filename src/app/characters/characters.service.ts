@@ -9,7 +9,7 @@ import { ICharacter } from "../shared/interfaces/character";
 @Injectable({
     providedIn: 'root'
 })
-export class DataService {
+export class CharactersService {
   private baseUrl = 'https://rickandmortyapi.com/api/character';
 
   constructor(private http: HttpClient) {}
@@ -35,14 +35,14 @@ export class DataService {
           charactersPerPage
         }
       }),
-      catchError(DataService.handleError),
+      catchError(CharactersService.handleError),
     )
   }
 
   getCharacterById(id: number): Observable<ICharacter> {
     const url = `${this.baseUrl}/${id}`;
     return this.http.get<ICharacter>(url).pipe(
-      catchError(DataService.handleError)
+      catchError(CharactersService.handleError)
     );
   }
 

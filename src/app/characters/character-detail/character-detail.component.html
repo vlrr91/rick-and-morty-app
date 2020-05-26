@@ -1,11 +1,12 @@
 <ng-container *ngIf="!notFound; else notFoundCharacter">
-  <div class="character-container" *ngIf="character">
-    <a class="btn-back" (click)="onBack()">back</a>
-    <div class="item-card">
+  <div class="character-detail" *ngIf="character">
+    <a class="character-detail__button" (click)="onBack()">back</a>
+    <div class="character-detail__card">
       <img
         [src]="character.image"
-        [alt]="character.name">
-      <div class="item-info">
+        [alt]="character.name"
+        class="character-detail__image">
+      <div class="character-detail__info">
         <h4>{{character.name}}</h4>
         <p>Species: {{character.species}}</p>
         <p>Gender: {{character.gender}}</p>

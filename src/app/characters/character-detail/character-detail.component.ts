@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import {ActivatedRoute } from '@angular/router';
 
-import { DataService } from "../data.service";
+import { CharactersService } from "../characters.service";
 import { ICharacter } from '../../shared/interfaces/character';
 
 @Component({
@@ -15,7 +15,7 @@ export class CharacterDetailComponent implements OnInit {
   notFound: boolean;
 
   constructor(
-    private dataService: DataService,
+    private dataService: CharactersService,
     private route: ActivatedRoute,
     private location: Location) { }
 

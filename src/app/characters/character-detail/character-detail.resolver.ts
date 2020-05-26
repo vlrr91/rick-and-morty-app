@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from "@angular/router";
 import { ICharacter } from "../../shared/interfaces/character";
 import {Observable, of} from "rxjs";
-import {DataService} from "../data.service";
+import {CharactersService} from "../characters.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CharacterDetailResolver implements Resolve<ICharacter>{
 
-  constructor(private dataService: DataService) {
+  constructor(private dataService: CharactersService) {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ICharacter> {

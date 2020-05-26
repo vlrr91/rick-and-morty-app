@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from "rxjs";
 
 import { ICharacter } from "../../shared/interfaces/character";
-import { DataService } from "../data.service";
+import { CharactersService } from "../characters.service";
 
 @Component({
   selector: 'rm-characters-list',
@@ -21,7 +21,7 @@ export class CharactersListComponent implements OnInit, OnDestroy {
 
   notFound: boolean;
 
-  constructor(private characterService: DataService,
+  constructor(private characterService: CharactersService,
               private route: ActivatedRoute,
               private router: Router) {
   }

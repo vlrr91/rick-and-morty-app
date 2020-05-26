@@ -3,16 +3,19 @@
   align-items: center;
   flex-direction: column;
 }
+
 .not-found__desc,
 .not-found__status {
   color: #FFFFFF;
   margin: 0;
 }
+
 .not-found__status {
   font-weight: 700;
   font-size: 8rem;
   letter-spacing: 2px;
 }
+
 .not-found__link {
   color: #FFFFFF;
   border: 1px solid #FFFFFF;
